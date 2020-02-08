@@ -2,7 +2,20 @@ server:
   port: 8010
 spring:
   datasource:
-    url: jdbc:h2://localhost:someDB
+    url: jdbc:h2:mem:someDB
     driver-class-name: org.h2.Driver
     username: root
     password: 123
+
+  jpa:
+    generate-ddl: true
+
+  security:
+    user:
+      name: admin
+      password: 123
+
+  mustache:
+    expose-request-attributes: true
+
+view
