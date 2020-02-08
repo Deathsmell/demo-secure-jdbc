@@ -8,6 +8,9 @@ public class MvcConfig {
     public void addViewControllers(ViewControllerRegistry viewControllerRegistry){
 
         viewControllerRegistry.addViewController("/login").setViewName("login");
+//        viewControllerRegistry.addViewController("/").setViewName("login");
+
+//        viewControllerRegistry.addViewController("/registration").setViewName("registration");
 
     }
 }
