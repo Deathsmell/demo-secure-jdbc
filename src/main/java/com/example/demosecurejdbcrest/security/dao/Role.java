@@ -1,5 +1,12 @@
 package com.example.demosecurejdbcrest.security.dao;
 
-public enum Role {
-    User;
+import org.springframework.security.core.GrantedAuthority;
+
+public enum Role implements GrantedAuthority {
+    USER, ADMIN ;
+
+    @Override
+    public String getAuthority() {
+        return null;
+    }
 }

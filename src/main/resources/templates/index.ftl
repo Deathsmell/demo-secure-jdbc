@@ -2,10 +2,10 @@
 <#import "parts/login.ftl" as l>
 
 <@c.page>
+
     <div>
-        <@l.logout/>
+        <h1>List clients</h1>
     </div>
-    <div>List clients</div>
     <#if clients??>
 
         <#list clients as client>
@@ -13,6 +13,7 @@
                 <b>${client.id}</b>
                 <span>${client.name}</span>
                 <i>${client.address}</i>
+                <th><a href="/delete/${client.id}">delete</a></th>
             </div>
         <#else>
             No client
@@ -31,4 +32,11 @@
         <input type="text" name="name" placeholder="Введите название организации">
         <button type="submit">Найти</button>
     </form>
+    <div>
+        <@l.logout/>
+        <a href="/user">
+            <button type="button">User list</button>
+        </a>
+    </div>
+
 </@c.page>

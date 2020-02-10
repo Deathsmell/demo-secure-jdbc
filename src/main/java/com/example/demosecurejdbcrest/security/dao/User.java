@@ -4,15 +4,18 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "usr")
+@Table(name = "user")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column (name = "username", nullable = false, unique = true)
     private String username;
+    @Column(name = "password", nullable = false)
     private String password;
+//    @Column(name = active)
     private boolean active;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)

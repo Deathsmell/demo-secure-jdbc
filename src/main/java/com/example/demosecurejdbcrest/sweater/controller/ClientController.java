@@ -1,13 +1,12 @@
 package com.example.demosecurejdbcrest.sweater.controller;
 
+import com.example.demosecurejdbcrest.security.dao.User;
 import com.example.demosecurejdbcrest.sweater.entity.Clients;
 import com.example.demosecurejdbcrest.sweater.repository.ClientsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -53,5 +52,11 @@ public class ClientController {
         model.put("clients", clients);
 
         return "index";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteClient (@PathVariable ("id") Long id){
+        clientsRepository.deleteById(id);
+        return "redirect:/index";
     }
 }

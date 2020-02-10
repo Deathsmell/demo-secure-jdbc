@@ -1,19 +1,20 @@
 package com.example.demosecurejdbcrest.sweater.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table (name = "client")
 public class Clients {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
 
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
+    @Column(name = "address")
     private String address;
 
     public Clients() {

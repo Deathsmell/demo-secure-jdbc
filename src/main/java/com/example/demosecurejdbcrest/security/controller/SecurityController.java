@@ -40,7 +40,7 @@ public class SecurityController {
             return "registration";
         }
         user.setActive(true);
-        user.setRoles(Collections.singleton(Role.User));
+        user.setRoles(Collections.singleton(Role.USER));
         userRepository.save(user);
         return "redirect:/login";
     }

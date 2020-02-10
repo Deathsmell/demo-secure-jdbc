@@ -3,20 +3,16 @@ server:
 
 spring:
   datasource:
-    url: jdbc:h2:mem:someDB
-    driver-class-name: org.h2.Driver
-    username: root
-    password: 123
+    url: jdbc:mysql://localhost/testDB
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: testuser
+    password: paSSw0rd!
+    sql-script-encoding: utf-16
 
   jpa:
     generate-ddl: true
 
-  security:
-    user:
-      name: admin
-      password: 123
-
 
   freemarker:
-    expose-request-attributes: true
+    expose-request-attributes: false
     suffix: .ftl
