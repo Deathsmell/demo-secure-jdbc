@@ -9,5 +9,4 @@ public class DemoSecureJdbcRestApplication {
     public static void main(String[] args) {
         SpringApplication.run(DemoSecureJdbcRestApplication.class, args);
     }
-
 }

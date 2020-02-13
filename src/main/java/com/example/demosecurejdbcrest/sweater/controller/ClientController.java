@@ -1,14 +1,18 @@
 package com.example.demosecurejdbcrest.sweater.controller;
 
-import com.example.demosecurejdbcrest.security.dao.User;
 import com.example.demosecurejdbcrest.sweater.entity.Clients;
 import com.example.demosecurejdbcrest.sweater.repository.ClientsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 public class ClientController {
@@ -20,9 +24,12 @@ public class ClientController {
         this.clientsRepository = clientsRepository;
     }
 
-    @GetMapping("/")
-    public String rootPage (){
-        return "index";
+    @Value("${upload.path}")
+    private String uploadPath;
+
+    @RequestMapping("/main")
+    public String main (){
+        return "main";
     }
 
     @GetMapping("/index")
@@ -43,11 +50,27 @@ public class ClientController {
     public String createClient(
             @RequestParam String name,
             @RequestParam String address,
-            Map<String, Object> model
-    ) {
-        Clients client = new Clients().setName(name).setAddress(address);
-        clientsRepository.save(client);
+            Map<String, Object> model,
+            @RequestParam ("file") MultipartFile file
+    ) throws IOException {
+        Clients client = new Clients(name, address);
+        // кусок кода работы с файлом
+        if (file != null && !file.getOriginalFilename().isEmpty()) {
+            File uploadDir = new File(uploadPath);
 
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFilename = uuidFile + "." + file.getOriginalFilename();
+
+            file.transferTo(new File(uploadPath + "/" + resultFilename));
+
+            client.setFilename(resultFilename);
+        }
+        // создаем клиента, обновляем список и отправляем его на страницу
+        clientsRepository.save(client);
         Iterable<Clients> clients = clientsRepository.findAll();
         model.put("clients", clients);
 

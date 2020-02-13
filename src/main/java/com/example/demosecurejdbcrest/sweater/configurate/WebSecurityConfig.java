@@ -1,4 +1,4 @@
-package com.example.demosecurejdbcrest.configurate;
+package com.example.demosecurejdbcrest.sweater.configurate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -16,8 +16,15 @@ import javax.sql.DataSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
+
     private DataSource dataSource;
+
+    @Autowired
+    public WebSecurityConfig setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+        return this;
+    }
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -36,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/login", "/registration")
+                    .antMatchers("/login", "/registration", "/static/**")
                     .permitAll()
                     .anyRequest()
                     .authenticated()

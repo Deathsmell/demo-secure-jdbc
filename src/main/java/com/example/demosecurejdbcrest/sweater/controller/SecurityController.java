@@ -1,8 +1,8 @@
-package com.example.demosecurejdbcrest.security.controller;
+package com.example.demosecurejdbcrest.sweater.controller;
 
-import com.example.demosecurejdbcrest.security.dao.Role;
-import com.example.demosecurejdbcrest.security.dao.User;
-import com.example.demosecurejdbcrest.security.repository.UserRepository;
+import com.example.demosecurejdbcrest.sweater.entity.Role;
+import com.example.demosecurejdbcrest.sweater.entity.User;
+import com.example.demosecurejdbcrest.sweater.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

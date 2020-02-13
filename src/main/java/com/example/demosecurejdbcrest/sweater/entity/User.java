@@ -1,6 +1,7 @@
-package com.example.demosecurejdbcrest.security.dao;
+package com.example.demosecurejdbcrest.sweater.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
@@ -15,13 +16,20 @@ public class User {
     private String username;
     @Column(name = "password", nullable = false)
     private String password;
-//    @Column(name = active)
+    @Column(name = "active")
     private boolean active;
+    @Column(name = "filename")
+    private String filename;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
+    @NotNull
     private Set<Role> roles;
+
+    public boolean isAdmin() {
+        return roles.contains(Role.ADMIN);
+    }
 
     public Long getId() {
         return id;
@@ -31,6 +39,7 @@ public class User {
         this.id = id;
         return this;
     }
+
 
     public String getUsername() {
         return username;

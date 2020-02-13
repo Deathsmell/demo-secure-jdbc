@@ -6,5 +6,4 @@
         ${message}
     </#if>
     <@l.login "/registration"/>
-    <a href="/login"><button type="button">Back</button> </a>
 </@c.page>

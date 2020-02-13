@@ -8,16 +8,22 @@ public class Clients {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", unique = true, nullable = false)
+    @Column(name = "name")
     private String name;
 
     @Column(name = "address")
     private String address;
 
+    @Column(name = "filename")
+    private String filename;
+
     public Clients() {
+    }
+    public Clients(String name, String address) {
+        this.address = address;
+        this.name = name;
     }
 
     public Long getId() {
@@ -44,6 +50,15 @@ public class Clients {
 
     public Clients setAddress(String address) {
         this.address = address;
+        return this;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public Clients setFilename(String filename) {
+        this.filename = filename;
         return this;
     }
 }

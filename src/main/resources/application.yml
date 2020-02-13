@@ -7,12 +7,16 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: testuser
     password: paSSw0rd!
-    sql-script-encoding: utf-16
+    sql-script-encoding: utf-8
 
   jpa:
     generate-ddl: true
 
-
   freemarker:
     expose-request-attributes: false
     suffix: .ftl
+
+  servlet:
+    multipart:
+      max-file-size: 20000000
+      file-size-threshold: 20000000
