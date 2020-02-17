@@ -12,7 +12,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column (name = "username", nullable = false, unique = true)
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
     @Column(name = "password", nullable = false)
     private String password;
@@ -20,6 +20,10 @@ public class User {
     private boolean active;
     @Column(name = "filename")
     private String filename;
+    @Column(name = "mail")
+    private String mail;
+    @Column(name = "activationCode")
+    private String activationCode;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
@@ -27,9 +31,9 @@ public class User {
     @NotNull
     private Set<Role> roles;
 
-    public boolean isAdmin() {
+    /*public boolean isAdmin() {
         return roles.contains(Role.ADMIN);
-    }
+    }*/
 
     public Long getId() {
         return id;
@@ -74,6 +78,33 @@ public class User {
 
     public User setRoles(Set<Role> roles) {
         this.roles = roles;
+        return this;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public User setFilename(String filename) {
+        this.filename = filename;
+        return this;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public User setMail(String mail) {
+        this.mail = mail;
+        return this;
+    }
+
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public User setActivationCode(String activate) {
+        activationCode = activate;
         return this;
     }
 

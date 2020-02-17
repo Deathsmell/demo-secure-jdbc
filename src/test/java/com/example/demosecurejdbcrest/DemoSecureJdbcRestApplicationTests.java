@@ -8,6 +8,7 @@ class DemoSecureJdbcRestApplicationTests {
 
     @Test
     void contextLoads() {
+
     }
 
 }

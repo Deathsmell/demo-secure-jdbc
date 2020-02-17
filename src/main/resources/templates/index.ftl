@@ -19,6 +19,7 @@
                 <th scope="col">#</th>
                 <th scope="col" class="text-center">name</th>
                 <th scope="col" class="text-center">address</th>
+                <th scope="col" class="text-center">mail</th>
                 <th scope="col" class="text-center"></th>
             </tr>
             </thead>
@@ -28,7 +29,9 @@
                     <th scope="row">${client.id}</th>
                     <td class="text-center">${client.name}</td>
                     <td class="text-center">${client.address}</td>
-                    <td class="text-center"><a href="/delete/${client.id}">delete</a></td>
+                    <td class="text-center">${client.mail!''}</td>
+                    <td class="text-right"><a href="/upload/${client.id}">upload</a></td>
+                    <td class="text-right"><a href="/delete/${client.id}">delete</a></td>
                 </tr>
             </#list>
             </tbody>

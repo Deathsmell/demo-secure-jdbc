@@ -1,31 +1,25 @@
 package com.example.demosecurejdbcrest.sweater.controller;
 
 import com.example.demosecurejdbcrest.sweater.entity.Clients;
-import com.example.demosecurejdbcrest.sweater.repository.ClientsRepository;
+import com.example.demosecurejdbcrest.sweater.service.ClientServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Map;
-import java.util.UUID;
 
 @Controller
 public class ClientController {
 
-    private final ClientsRepository clientsRepository;
+    private final ClientServiceInterface clientService;
 
     @Autowired
-    public ClientController(ClientsRepository clientsRepository) {
-        this.clientsRepository = clientsRepository;
+    public ClientController( ClientServiceInterface clientService) {
+        this.clientService = clientService;
     }
-
-    @Value("${upload.path}")
-    private String uploadPath;
 
     @RequestMapping("/main")
     public String main (){
@@ -34,15 +28,8 @@ public class ClientController {
 
     @GetMapping("/index")
     public String getClients(@RequestParam(required = false, defaultValue = "") String name, Model model) {
-        Iterable<Clients> clients = clientsRepository.findAll();
-
-        if (name != null && !name.isEmpty()){
-            clients = clientsRepository.findByName(name);
-        }else {
-            clients = clientsRepository.findAll();
-        }
         model.addAttribute("name", name);
-        model.addAttribute("clients", clients);
+        model.addAttribute("clients", clientService.getClientByName(name));
         return "index";
     }
 
@@ -53,33 +40,37 @@ public class ClientController {
             Map<String, Object> model,
             @RequestParam ("file") MultipartFile file
     ) throws IOException {
-        Clients client = new Clients(name, address);
-        // кусок кода работы с файлом
-        if (file != null && !file.getOriginalFilename().isEmpty()) {
-            File uploadDir = new File(uploadPath);
 
-            if (!uploadDir.exists()) {
-                uploadDir.mkdir();
-            }
+        clientService.createClient(name, address, file);
 
-            String uuidFile = UUID.randomUUID().toString();
-            String resultFilename = uuidFile + "." + file.getOriginalFilename();
-
-            file.transferTo(new File(uploadPath + "/" + resultFilename));
-
-            client.setFilename(resultFilename);
-        }
-        // создаем клиента, обновляем список и отправляем его на страницу
-        clientsRepository.save(client);
-        Iterable<Clients> clients = clientsRepository.findAll();
-        model.put("clients", clients);
+        model.put("clients", clientService.getClients());
 
         return "index";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteClient (@PathVariable ("id") Long id){
-        clientsRepository.deleteById(id);
+        clientService.deleteClient(id);
+        return "redirect:/index";
+    }
+
+    @GetMapping("/upload/{clients}")
+    public String getClientInfo (@PathVariable Clients clients, Model model){
+        Clients client = clientService.getClientById(clients.getId());
+        model.addAttribute("client", client);
+        return "uploadClient";
+    }
+
+    @PostMapping("/upload/{clients}")
+    public String uploadClient (
+            @PathVariable Clients clients,
+            @RequestParam String name,
+            @RequestParam String address,
+            @RequestParam String mail
+//            @RequestParam String filename,
+//            @RequestParam ("file") MultipartFile file
+    ) throws IOException{
+        clientService.uploadClient(clients,name, address, mail);
         return "redirect:/index";
     }
 }

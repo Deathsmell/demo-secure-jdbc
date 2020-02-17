@@ -12,12 +12,12 @@ public class Clients {
 
     @Column(name = "name")
     private String name;
-
     @Column(name = "address")
     private String address;
-
     @Column(name = "filename")
     private String filename;
+    @Column(name = "mail")
+    private String mail;
 
     public Clients() {
     }
@@ -59,6 +59,15 @@ public class Clients {
 
     public Clients setFilename(String filename) {
         this.filename = filename;
+        return this;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public Clients setMail(String mail) {
+        this.mail = mail;
         return this;
     }
 }

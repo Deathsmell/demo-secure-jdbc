@@ -1,24 +1,22 @@
 package com.example.demosecurejdbcrest.sweater.controller;
 
-import com.example.demosecurejdbcrest.sweater.entity.Role;
 import com.example.demosecurejdbcrest.sweater.entity.User;
-import com.example.demosecurejdbcrest.sweater.repository.UserRepository;
+import com.example.demosecurejdbcrest.sweater.service.UserServiceImplement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.Collections;
-import java.util.Map;
 
 @Controller
 public class SecurityController {
 
-    private final UserRepository userRepository;
+    private final UserServiceImplement userService;
 
     @Autowired
-    public SecurityController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public SecurityController(UserServiceImplement userService) {
+        this.userService = userService;
     }
 
 
@@ -33,15 +31,27 @@ public class SecurityController {
     }
 
     @PostMapping("/registration")
-    public String addUser(User user, Map<String, Object> model) {
-        User usernameFromDB = userRepository.findByUsername(user.getUsername());
-        if (usernameFromDB != null){
-            model.put("message", "User exists!");
+    public String addUser(User user, Model model) {
+
+        if (!userService.addUser(user)) {
+            model.addAttribute("message", "User exists!");
             return "registration";
         }
-        user.setActive(true);
-        user.setRoles(Collections.singleton(Role.USER));
-        userRepository.save(user);
         return "redirect:/login";
+    }
+
+    @GetMapping("/activate/{code}")
+    public String activate(Model model, @PathVariable String code) {
+
+
+        boolean isActivated = userService.activateUser(code);
+
+        if (isActivated) {
+            model.addAttribute("massage", "User successfully activated");
+        } else {
+            model.addAttribute("message", "User exists!");
+        }
+
+        return "login";
     }
 }
