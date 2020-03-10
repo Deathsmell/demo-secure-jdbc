@@ -1,4 +1,4 @@
-insert into testDB.user
+insert into usr
     (id, activation_code, active, filename, mail, password, username)
 VALUES (1,
         null,
@@ -7,22 +7,22 @@ VALUES (1,
         'johndeathsmell@gmail.com',
         123,
         'admin');
-insert into testDB.user_role (user_id, roles)
+insert into user_role (user_id, roles)
 VALUES (
         1,
         'ADMIN'
        );
-insert into testDB.user_role (user_id, roles)
+insert into user_role (user_id, roles)
 VALUES (
            1,
            'MASTER'
        );
-insert into testDB.user_role (user_id, roles)
+insert into user_role (user_id, roles)
 VALUES (
            1,
            'USER'
        );
-insert into testDB.user_role (user_id, roles)
+insert into user_role (user_id, roles)
 VALUES (
            1,
            'GUEST'

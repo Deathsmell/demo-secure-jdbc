@@ -1,15 +1,17 @@
 package com.example.demosecurejdbcrest.sweater.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 @Entity
-@Table (name = "client")
+@Data
+@Table(name = "client")
 public class Clients {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     @Column(name = "name")
     private String name;
     @Column(name = "address")
@@ -19,55 +21,4 @@ public class Clients {
     @Column(name = "mail")
     private String mail;
 
-    public Clients() {
-    }
-    public Clients(String name, String address) {
-        this.address = address;
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Clients setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Clients setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public Clients setAddress(String address) {
-        this.address = address;
-        return this;
-    }
-
-    public String getFilename() {
-        return filename;
-    }
-
-    public Clients setFilename(String filename) {
-        this.filename = filename;
-        return this;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public Clients setMail(String mail) {
-        this.mail = mail;
-        return this;
-    }
 }

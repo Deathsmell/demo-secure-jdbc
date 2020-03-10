@@ -50,7 +50,9 @@ public class ClientServiceInterfaceImpl implements ClientServiceInterface {
     @Override
     public void createClient(String name, String address, MultipartFile file) throws IOException {
 
-        Clients client = new Clients(name, address);
+        Clients client = new Clients();
+        client.setName(name);
+        client.setAddress(address);
 
         // кусок кода работы с файлом
         downloadFile(file, client);

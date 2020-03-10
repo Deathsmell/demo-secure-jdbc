@@ -8,7 +8,7 @@
         <h1 class="text-center mt-3">List clients</h1>
     </div>
     <br/>
-    <#if !isAdmin || !isMaster>
+    <#if !isAdmin>
         <@f.clientform/>
     </#if>
 
